@@ -21,9 +21,18 @@ export default function PendulumMotionPage() {
   // アニメーションフレーム追跡用
   const requestRef = useRef<number | null>(null);
   const previousTimeRef = useRef<number | null>(null);
+  const isResetRef = useRef<boolean>(false); // リセット状態を追跡する参照
   
   // アニメーションループ
   const animate = (time: number) => {
+    // リセット直後の場合、時間参照をリセットして次のフレームを待つ
+    if (isResetRef.current) {
+      previousTimeRef.current = time;
+      isResetRef.current = false;
+      requestRef.current = requestAnimationFrame(animate);
+      return;
+    }
+    
     if (previousTimeRef.current !== null) {
       const deltaTime = (time - previousTimeRef.current) / 1000;
       setSimulationState(prevState => 
@@ -59,9 +68,11 @@ export default function PendulumMotionPage() {
       requestRef.current = null;
     }
     previousTimeRef.current = null;
+    isResetRef.current = true; // リセット状態をマーク
     
-    // 新しい関数を使用して完全にリセットした状態を設定
-    setSimulationState(createFreshPendulumState(simulationState.parameters));
+    // 完全に新しいシミュレーション状態を作成して設定
+    const freshState = createFreshPendulumState(simulationState.parameters);
+    setSimulationState(freshState);
   };
   
   // 再生速度変更
@@ -89,12 +100,17 @@ export default function PendulumMotionPage() {
   // アニメーションフレームの開始と終了
   useEffect(() => {
     if (simulationState.isRunning) {
+      // アニメーションが再開される前に、リセット直後かどうかチェック
+      if (isResetRef.current || previousTimeRef.current === null) {
+        previousTimeRef.current = null; // 時間参照を確実にリセット
+      }
       requestRef.current = requestAnimationFrame(animate);
     }
     
     return () => {
       if (requestRef.current !== null) {
         cancelAnimationFrame(requestRef.current);
+        requestRef.current = null;
       }
     };
   }, [simulationState.isRunning]);
@@ -102,7 +118,15 @@ export default function PendulumMotionPage() {
   // パラメータ変更時にシミュレーションデータを更新
   useEffect(() => {
     if (!simulationState.isRunning) {
-      setSimulationState(prevState => resetPendulumMotion(prevState));
+      // 現在のパラメータで新しい状態を作成
+      const freshState = createFreshPendulumState({
+        ...simulationState.parameters
+      });
+      setSimulationState(freshState);
+      
+      // アニメーション参照もリセット
+      previousTimeRef.current = null;
+      isResetRef.current = true;
     }
   }, [
     simulationState.parameters.length.value,
