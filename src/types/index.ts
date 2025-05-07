@@ -19,6 +19,27 @@ export interface SimulationData {
   [key: string]: unknown;
 }
 
+// Projectile Motionに特化したデータ型
+export interface ProjectileMotionData extends SimulationData {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  trajectory: TrajectoryPoint[];
+  maxHeight: number;
+  range: number;
+  flightTime: number;
+  hasLanded: boolean;
+}
+
+export interface TrajectoryPoint {
+  x: number;
+  y: number;
+  time: number;
+  vx: number;
+  vy: number;
+}
+
 // シミュレーション状態の型
 export interface SimulationState {
   id: string;
@@ -30,7 +51,7 @@ export interface SimulationState {
   isRunning: boolean;
   currentTime: number;
   speed: number;
-  simulationData: SimulationData; // anyからSimulationDataに変更
+  simulationData: SimulationData | ProjectileMotionData; // SimulationData または ProjectileMotionData
 }
 
 // シミュレーション単元の型

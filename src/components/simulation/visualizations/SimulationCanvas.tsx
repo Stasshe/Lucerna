@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 
 interface SimulationCanvasProps {
   children: React.ReactNode;
+  height?: string; // heightプロパティをオプショナルに変更
   cameraPosition?: [number, number, number];
   cameraFov?: number;
   backgroundColor?: string;
@@ -17,6 +18,7 @@ interface SimulationCanvasProps {
 
 export function SimulationCanvas({
   children,
+  height = '600px', // デフォルト値を設定
   cameraPosition = [0, 2, 5],
   cameraFov = 75,
   backgroundColor = '#f0f0f0',
@@ -51,7 +53,8 @@ export function SimulationCanvas({
   return (
     <div 
       ref={containerRef}
-      className={`relative w-full ${isFullscreen ? 'h-screen' : 'h-[600px]'} rounded-lg overflow-hidden`}
+      className={`relative w-full ${isFullscreen ? 'h-screen' : ''} rounded-lg overflow-hidden`}
+      style={{ height: !isFullscreen ? height : undefined }} // 通常時にheightを適用
     >
       <Button
         variant="outline"

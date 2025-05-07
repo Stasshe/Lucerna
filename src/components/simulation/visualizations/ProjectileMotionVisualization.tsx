@@ -2,22 +2,15 @@
 
 import React from 'react';
 import { Line, Text, Box } from '@react-three/drei';
-import { SimulationState } from '@/types';
-
-interface TrajectoryPoint {
-  x: number;
-  y: number;
-  time: number;
-  vx: number;
-  vy: number;
-}
+import { SimulationState, ProjectileMotionData, TrajectoryPoint } from '@/types'; // TrajectoryPoint をインポート
 
 interface ProjectileMotionVisualizationProps {
   state: SimulationState;
 }
 
 export function ProjectileMotionVisualization({ state }: ProjectileMotionVisualizationProps) {
-  const { x, y, vx, vy, trajectory, maxHeight, range, hasLanded } = state.simulationData;
+  // state.simulationData を ProjectileMotionData にキャスト
+  const { x, y, vx, vy, trajectory, maxHeight, range, flightTime, hasLanded } = state.simulationData as ProjectileMotionData;
   
   // オブジェクトのサイズを質量に応じて変更
   const mass = state.parameters.mass.value;
@@ -177,7 +170,7 @@ export function ProjectileMotionVisualization({ state }: ProjectileMotionVisuali
           anchorX="center"
           anchorY="top"
         >
-          滞空時間: {hasLanded ? state.simulationData.flightTime.toFixed(2) : "---"} s
+          滞空時間: {hasLanded ? flightTime.toFixed(2) : "---"} s
         </Text>
       </group>
     </>

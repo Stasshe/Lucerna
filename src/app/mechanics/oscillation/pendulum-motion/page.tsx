@@ -205,7 +205,7 @@ export default function PendulumMotionPage() {
     <SimulationLayout
       title="単振り子運動"
       description="質点が糸で吊るされた単振り子の運動をシミュレーションします。振り子の長さ、初期角度、重力加速度、減衰係数を変化させることで、周期や減衰の様子を観察できます。"
-      parameters={Object.values(simulationState.parameters)}
+      parameters={simulationState.parameters}
       isRunning={simulationState.isRunning}
       speed={simulationState.speed}
       onParameterChange={handleParameterChange}
