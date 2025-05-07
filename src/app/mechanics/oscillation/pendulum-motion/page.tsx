@@ -52,12 +52,18 @@ export default function PendulumMotionPage() {
   
   // シミュレーションリセット
   const handleReset = () => {
-    setSimulationState(prevState => 
-      resetPendulumMotion({
-        ...prevState,
-        isRunning: false
-      })
-    );
+    // リセット処理の前にアニメーションフレームをキャンセル
+    if (requestRef.current !== null) {
+      cancelAnimationFrame(requestRef.current);
+      requestRef.current = null;
+    }
+    previousTimeRef.current = null;
+    
+    // 完全にリセットした新しい状態を設定
+    setSimulationState({
+      ...pendulumMotionInitialState,
+      parameters: { ...simulationState.parameters } // 現在のパラメータを維持
+    });
   };
   
   // 再生速度変更

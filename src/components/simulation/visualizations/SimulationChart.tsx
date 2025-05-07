@@ -42,16 +42,16 @@ export function SimulationChart({
   ];
 
   return (
-    <div className="w-full h-full" style={{ minHeight: '600px' }}>
+    <div className="w-full h-full" style={{ minHeight: '450px' }}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={displayData}
-          margin={{ top: 20, right: 30, left: 30, bottom: 30 }}
+          margin={{ top: 20, right: 30, left: 30, bottom: 50 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             dataKey={xAxisKey}
-            label={{ value: xAxisLabel, position: 'insideBottomRight', offset: -10 }}
+            label={{ value: xAxisLabel, position: 'insideBottom', offset: -20 }}
           />
           <YAxis label={{ value: yAxisLabel, angle: -90, position: 'insideLeft' }} />
           <Tooltip />

@@ -18,7 +18,7 @@ interface SimulationCanvasProps {
 
 export function SimulationCanvas({
   children,
-  height = '600px', // デフォルト値を設定
+  height = '500px', // デフォルト値を600pxから500pxに変更
   cameraPosition = [0, 2, 5],
   cameraFov = 75,
   backgroundColor = '#f0f0f0',

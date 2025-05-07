@@ -30,40 +30,49 @@ export function PlaybackControls({
   onSpeedChange
 }: PlaybackControlsProps) {
   return (
-    <div className="flex items-center space-x-2 bg-card p-2 rounded-md shadow">
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={onReset}
-        title="リセット"
-      >
-        <RotateCcw className="h-4 w-4" />
-      </Button>
-      
-      {!isRunning ? (
-        <Button
-          variant="default"
-          size="icon"
-          onClick={onPlay}
-          title="再生"
-        >
-          <Play className="h-4 w-4" />
-        </Button>
-      ) : (
-        <Button
-          variant="default"
-          size="icon"
-          onClick={onPause}
-          title="一時停止"
-        >
-          <Pause className="h-4 w-4" />
-        </Button>
-      )}
-      
-      <div className="flex items-center space-x-1">
+    <div className="flex items-center justify-between flex-wrap bg-card p-3 rounded-md shadow z-10 relative">
+      <div className="flex items-center space-x-2 mb-2 sm:mb-0">
         <Button
           variant="outline"
-          size="icon"
+          size="sm"
+          onClick={onReset}
+          title="リセット"
+          className="h-9 px-3"
+        >
+          <RotateCcw className="h-4 w-4 mr-1" />
+          <span>リセット</span>
+        </Button>
+        
+        {!isRunning ? (
+          <Button
+            variant="default"
+            size="sm"
+            onClick={onPlay}
+            title="再生"
+            className="h-9 px-4"
+          >
+            <Play className="h-4 w-4 mr-1" />
+            <span>再生</span>
+          </Button>
+        ) : (
+          <Button
+            variant="default"
+            size="sm"
+            onClick={onPause}
+            title="一時停止"
+            className="h-9 px-4"
+          >
+            <Pause className="h-4 w-4 mr-1" />
+            <span>停止</span>
+          </Button>
+        )}
+      </div>
+      
+      <div className="flex items-center space-x-2">
+        <span className="text-sm font-medium mr-1">速度：</span>
+        <Button
+          variant="outline"
+          size="sm"
           onClick={() => {
             const currentIndex = speedOptions.indexOf(speed);
             if (currentIndex > 0) {
@@ -72,17 +81,18 @@ export function PlaybackControls({
           }}
           disabled={speedOptions.indexOf(speed) <= 0}
           title="再生速度を下げる"
+          className="h-8 w-8 p-0"
         >
           <Rewind className="h-4 w-4" />
         </Button>
         
-        <div className="text-xs font-medium w-10 text-center">
+        <div className="text-sm font-medium w-10 text-center">
           {speed}x
         </div>
         
         <Button
           variant="outline"
-          size="icon"
+          size="sm"
           onClick={() => {
             const currentIndex = speedOptions.indexOf(speed);
             if (currentIndex < speedOptions.length - 1) {
@@ -91,6 +101,7 @@ export function PlaybackControls({
           }}
           disabled={speedOptions.indexOf(speed) >= speedOptions.length - 1}
           title="再生速度を上げる"
+          className="h-8 w-8 p-0"
         >
           <FastForward className="h-4 w-4" />
         </Button>

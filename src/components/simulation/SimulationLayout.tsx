@@ -47,14 +47,14 @@ export function SimulationLayout({
         {/* シミュレーション表示エリア */}
         <Card className="lg:col-span-2">
           <CardContent className="p-6">
-            <div>
-              {/* シミュレーションキャンバス */}
-              <div className="h-[600px]">
+            <div className="relative">
+              {/* シミュレーションキャンバス - 高さを調整 */}
+              <div className="h-[500px]">
                 {children}
               </div>
               
-              {/* 再生コントロール - キャンバスの下に配置 */}
-              <div className="mt-4">
+              {/* 再生コントロール - 高いz-indexを指定して前面に表示 */}
+              <div className="mt-4 pb-2 relative z-20">
                 <PlaybackControls
                   isRunning={isRunning}
                   speed={speed}
