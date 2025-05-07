@@ -47,14 +47,6 @@ export function SimulationCanvas({
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
     };
   }, []);
-  
-  // 完全な2Dモードのためのビューポートと設定を調整
-  const viewportConfig = is2D ? {
-    // X-Y平面で完全上からの2D視点
-    position: [0, 0, 50], // Z軸方向から見下ろす
-    zoom: 30, // 適切なズームレベル
-    far: 2000
-  } : {};
 
   return (
     <div 
@@ -88,7 +80,7 @@ export function SimulationCanvas({
         />
         
         {is2D ? (
-          // 完全な2D表示用のOrthographicCamera
+          // 2D表示用のOrthographicCamera
           <OrthographicCamera
             makeDefault
             position={[0, 0, 50]}
@@ -105,7 +97,18 @@ export function SimulationCanvas({
         )}
         
         {children}
-        {orbitControls && !is2D && <OrbitControls />}
+        
+        {/* 2Dモードでもカメラ移動を可能にする */}
+        {orbitControls && (
+          <OrbitControls 
+            enableRotate={!is2D} // 2Dモードでは回転を無効
+            enableZoom={true}    // ズームは常に有効
+            enablePan={true}     // パン（移動）も常に有効
+            // 2Dモードの場合、上下方向の回転を制限
+            minPolarAngle={is2D ? Math.PI / 2 : 0}
+            maxPolarAngle={is2D ? Math.PI / 2 : Math.PI}
+          />
+        )}
       </Canvas>
     </div>
   );

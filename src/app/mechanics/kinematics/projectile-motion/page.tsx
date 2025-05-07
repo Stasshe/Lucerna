@@ -223,7 +223,7 @@ export default function ProjectileMotionPage() {
       theory={theoryContent}
       additionalInfo={tipsContent}
     >
-      <Tabs defaultValue="3d">
+      <Tabs defaultValue="3d" className="h-full">
         <TabsList className="mb-4">
           <TabsTrigger value="3d">2Dビュー</TabsTrigger>
           <TabsTrigger value="position">位置グラフ</TabsTrigger>
@@ -235,7 +235,7 @@ export default function ProjectileMotionPage() {
             cameraPosition={[15, 10, 30]}
             cameraFov={60}
             backgroundColor="#f5f5f5"
-            orbitControls={false}
+            orbitControls={true}
             is2D={true}
           >
             <ProjectileMotionVisualization state={simulationState} />
@@ -243,30 +243,34 @@ export default function ProjectileMotionPage() {
         </TabsContent>
         
         <TabsContent value="position" className="h-full">
-          <SimulationChart
-            data={positionData}
-            xAxisKey="time"
-            xAxisLabel="時間 (s)"
-            yAxisLabel="位置 (m)"
-            series={[
-              { key: 'height', name: '高さ', color: '#3b82f6' },
-              { key: 'distance', name: '水平距離', color: '#ef4444' }
-            ]}
-          />
+          <div className="h-[550px]">
+            <SimulationChart
+              data={positionData}
+              xAxisKey="time"
+              xAxisLabel="時間 (s)"
+              yAxisLabel="位置 (m)"
+              series={[
+                { key: 'height', name: '高さ', color: '#3b82f6' },
+                { key: 'distance', name: '水平距離', color: '#ef4444' }
+              ]}
+            />
+          </div>
         </TabsContent>
         
         <TabsContent value="energy" className="h-full">
-          <SimulationChart
-            data={energyData}
-            xAxisKey="time"
-            xAxisLabel="時間 (s)"
-            yAxisLabel="エネルギー (J)"
-            series={[
-              { key: 'kinetic', name: '運動エネルギー', color: '#3b82f6' },
-              { key: 'potential', name: '位置エネルギー', color: '#10b981' },
-              { key: 'total', name: '全エネルギー', color: '#8b5cf6' }
-            ]}
-          />
+          <div className="h-[550px]">
+            <SimulationChart
+              data={energyData}
+              xAxisKey="time"
+              xAxisLabel="時間 (s)"
+              yAxisLabel="エネルギー (J)"
+              series={[
+                { key: 'kinetic', name: '運動エネルギー', color: '#3b82f6' },
+                { key: 'potential', name: '位置エネルギー', color: '#10b981' },
+                { key: 'total', name: '全エネルギー', color: '#8b5cf6' }
+              ]}
+            />
+          </div>
         </TabsContent>
       </Tabs>
     </SimulationLayout>
