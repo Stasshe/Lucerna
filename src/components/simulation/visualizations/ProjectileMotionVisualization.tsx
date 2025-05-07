@@ -112,7 +112,7 @@ export function ProjectileMotionVisualization({ state }: ProjectileMotionVisuali
               fontSize={0.4}
               color="black"
               anchorX="right"
-              anchorY="center"
+              anchorY="middle"
             >
               {yTick}m
             </Text>

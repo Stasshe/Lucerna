@@ -1,0 +1,27 @@
+services:
+  # Next.jsウェブサービス
+  - type: web
+    name: lucerna
+    env: node
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    plan: free
+    # インスタンスタイプの設定 - 必要に応じて変更可能
+    nodeVersion: 18.x # Node.js 18.xを使用
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+
+# 環境変数とビルド/スタートコマンドの設定
+envVarGroups:
+  - name: settings
+    envVars:
+      - key: NEXT_PUBLIC_SITE_URL
+        generateValue: true # Renderのドメインを自動生成
+      - key: NEXT_PUBLIC_API_URL
+        sync: false # 必要に応じて手動で設定
+
+# デプロイ設定
+autoDeploy: true # GitHubへのプッシュでデプロイを自動化
