@@ -217,7 +217,7 @@ export default function UniformMotionPage() {
     >
       <Tabs defaultValue="3d">
         <TabsList className="mb-4">
-          <TabsTrigger value="3d">3Dビュー</TabsTrigger>
+          <TabsTrigger value="3d">2Dビュー</TabsTrigger>
           <TabsTrigger value="position">位置・速度グラフ</TabsTrigger>
           <TabsTrigger value="energy">エネルギーグラフ</TabsTrigger>
         </TabsList>
@@ -226,6 +226,8 @@ export default function UniformMotionPage() {
           <SimulationCanvas
             cameraPosition={[0, 3, 10]}
             backgroundColor="#f5f5f5"
+            orbitControls={false}
+            is2D={true}
           >
             <UniformMotionVisualization state={simulationState} />
           </SimulationCanvas>

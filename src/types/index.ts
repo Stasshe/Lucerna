@@ -14,6 +14,11 @@ export interface SimulationParameter {
   label: string;
 }
 
+// シミュレーションのデータ型（ジェネリック）
+export interface SimulationData {
+  [key: string]: unknown;
+}
+
 // シミュレーション状態の型
 export interface SimulationState {
   id: string;
@@ -25,7 +30,7 @@ export interface SimulationState {
   isRunning: boolean;
   currentTime: number;
   speed: number;
-  simulationData: any;
+  simulationData: SimulationData; // anyからSimulationDataに変更
 }
 
 // シミュレーション単元の型

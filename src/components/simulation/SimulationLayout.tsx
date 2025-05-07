@@ -47,18 +47,20 @@ export function SimulationLayout({
         {/* シミュレーション表示エリア */}
         <Card className="lg:col-span-2">
           <CardContent className="p-6">
-            <div className="h-[500px]">
-              {children}
-            </div>
-            <div className="mt-4">
-              <PlaybackControls
-                isRunning={isRunning}
-                speed={speed}
-                onPlay={onPlay}
-                onPause={onPause}
-                onReset={onReset}
-                onSpeedChange={onSpeedChange}
-              />
+            <div className="relative">
+              <div className="h-[600px] mb-12">
+                {children}
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 py-2">
+                <PlaybackControls
+                  isRunning={isRunning}
+                  speed={speed}
+                  onPlay={onPlay}
+                  onPause={onPause}
+                  onReset={onReset}
+                  onSpeedChange={onSpeedChange}
+                />
+              </div>
             </div>
           </CardContent>
         </Card>

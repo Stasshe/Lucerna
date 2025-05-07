@@ -235,6 +235,8 @@ export default function ProjectileMotionPage() {
             cameraPosition={[15, 10, 30]}
             cameraFov={60}
             backgroundColor="#f5f5f5"
+            orbitControls={false}
+            is2D={true}
           >
             <ProjectileMotionVisualization state={simulationState} />
           </SimulationCanvas>
