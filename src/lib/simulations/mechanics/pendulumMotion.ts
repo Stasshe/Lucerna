@@ -159,11 +159,11 @@ export function calculatePendulumMotion(
   };
 }
 
-// シミュレーションのリセット
-export function resetPendulumMotion(state: PendulumSimulationState): PendulumSimulationState {
-  const { initialAngle } = state.parameters;
-  const angleInRadians = initialAngle.value * Math.PI / 180;
-  const L = state.parameters.length.value;
+// 完全に初期化された新しいシミュレーション状態を作成
+export function createFreshPendulumState(parameters: PendulumParameters): PendulumSimulationState {
+  const angleInRadians = parameters.initialAngle.value * Math.PI / 180;
+  const L = parameters.length.value;
+  const g = parameters.gravity.value;
   
   // 振り子の先端（おもり）の初期位置
   const bobX = L * Math.sin(angleInRadians);
@@ -174,18 +174,26 @@ export function resetPendulumMotion(state: PendulumSimulationState): PendulumSim
     time: 0,
     angle: angleInRadians,
     angularVelocity: 0,
-    potentialEnergy: state.parameters.gravity.value * L * (1 - Math.cos(angleInRadians)),
+    potentialEnergy: g * L * (1 - Math.cos(angleInRadians)),
     kineticEnergy: 0,
-    totalEnergy: state.parameters.gravity.value * L * (1 - Math.cos(angleInRadians))
+    totalEnergy: g * L * (1 - Math.cos(angleInRadians))
   };
   
   return {
-    ...state,
+    ...pendulumMotionInitialState,
+    parameters: { ...parameters },
     currentTime: 0,
+    isRunning: false,
     simulationData: {
-      ...state.simulationData,
       bobPosition: { x: bobX, y: bobY },
-      data: [initialData]
+      data: [initialData],
+      maxDataPoints: 500
     }
   };
+}
+
+// シミュレーションのリセット - より完全なリセットを行う
+export function resetPendulumMotion(state: PendulumSimulationState): PendulumSimulationState {
+  // 現在のパラメータを使用して、完全に新しい状態を作成
+  return createFreshPendulumState(state.parameters);
 }

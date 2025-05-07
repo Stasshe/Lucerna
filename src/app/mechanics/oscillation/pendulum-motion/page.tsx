@@ -9,6 +9,7 @@ import {
   pendulumMotionInitialState, 
   calculatePendulumMotion, 
   resetPendulumMotion,
+  createFreshPendulumState,
   PendulumSimulationState
 } from '@/lib/simulations/mechanics/pendulumMotion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -59,11 +60,8 @@ export default function PendulumMotionPage() {
     }
     previousTimeRef.current = null;
     
-    // 完全にリセットした新しい状態を設定
-    setSimulationState({
-      ...pendulumMotionInitialState,
-      parameters: { ...simulationState.parameters } // 現在のパラメータを維持
-    });
+    // 新しい関数を使用して完全にリセットした状態を設定
+    setSimulationState(createFreshPendulumState(simulationState.parameters));
   };
   
   // 再生速度変更
